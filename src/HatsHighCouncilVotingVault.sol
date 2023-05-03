@@ -6,7 +6,7 @@ import { IHats } from "hats-protocol/Interfaces/IHats.sol";
 import { IVotingVault } from "council/interfaces/IVotingVault.sol";
 
 contract HatsHighCouncilVotingVault is IVotingVault {
-  /// @dev The pattern of a member DAO voting rep hat
+  /// @dev The pattern of a member DAO voting rep hat, i.e. hat 1.1.x.1
   uint256 internal constant PATTERN = 0x00000001_0001_0000_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000;
   /// @dev The mask for a member DAO voting rep hat
   uint256 internal constant MASK = 0xFFFFFFFF_FFFF_0000_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF;
