@@ -1,0 +1,20 @@
+Compiling 3 files with 0.8.18
+Solc 0.8.18 finished in 705.01ms
+Compiler run successful
+
+Running 5 tests for test/HatsHighCouncilVotingVault.t.sol:IsVotingRepHat
+[32m[PASS][0m testFuzz_matchesPattern_true(uint16) (runs: 5000, μ: 33584, ~: 33584)
+[32m[PASS][0m testFuzz_tooChildy_false(uint160) (runs: 5000, μ: 33626, ~: 33626)
+[32m[PASS][0m testFuzz_wrongLevel1Hat_false(uint16) (runs: 5000, μ: 33649, ~: 33649)
+[32m[PASS][0m testFuzz_wrongLevel3Hat_false(uint16) (runs: 5000, μ: 33671, ~: 33671)
+[32m[PASS][0m testFuzz_wrongTopHat_false(uint32) (runs: 5000, μ: 33604, ~: 33604)
+Test result: [32mok[0m. 5 passed; 0 failed; finished in 212.68ms
+| src/HatsHighCouncilVotingVault.sol:HatsHighCouncilVotingVault contract |                 |     |        |     |         |
+|------------------------------------------------------------------------|-----------------|-----|--------|-----|---------|
+| Deployment Cost                                                        | Deployment Size |     |        |     |         |
+| 168051                                                                 | 1015            |     |        |     |         |
+| Function Name                                                          | min             | avg | median | max | # calls |
+| isVotingRepHat                                                         | 254             | 254 | 254    | 254 | 5       |
+
+
+
