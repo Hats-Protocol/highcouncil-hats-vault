@@ -29,14 +29,14 @@ contract IsVotingRepHat is HHCVVTest {
 
   function testFuzz_matchesPattern_true(uint16 id) public {
     vm.assume(id > 0);
-    testValue = 0x00000001_0001_0000_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 + (uint256(id) << 192);
+    testValue = 0x00000057_0001_0000_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 + (uint256(id) << 192);
     console2.log(testValue);
     assertTrue(hhcvv.isVotingRepHat(testValue));
   }
 
   function testFuzz_tooChildy_false(uint160 id) public {
     vm.assume(id > 0);
-    testValue = 0x00000001_0001_0001_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 + uint256(id);
+    testValue = 0x00000057_0001_0001_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 + uint256(id);
     console2.log(testValue);
     assertFalse(hhcvv.isVotingRepHat(testValue));
   }
@@ -50,14 +50,14 @@ contract IsVotingRepHat is HHCVVTest {
 
   function testFuzz_wrongLevel1Hat_false(uint16 id) public {
     vm.assume(id > 1);
-    testValue = 0x00000001_0000_0001_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 + (uint256(id) << 208);
+    testValue = 0x00000057_0000_0001_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 + (uint256(id) << 208);
     console2.log(testValue);
     assertFalse(hhcvv.isVotingRepHat(testValue));
   }
 
   function testFuzz_wrongLevel3Hat_false(uint16 id) public {
     vm.assume(id > 1);
-    testValue = 0x00000001_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 + (uint256(id) << 176);
+    testValue = 0x00000057_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 + (uint256(id) << 176);
     console2.log(testValue);
     assertFalse(hhcvv.isVotingRepHat(testValue));
   }

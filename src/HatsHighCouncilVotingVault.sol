@@ -6,8 +6,10 @@ import { IHats } from "hats-protocol/Interfaces/IHats.sol";
 import { IVotingVault } from "council/interfaces/IVotingVault.sol";
 
 contract HatsHighCouncilVotingVault is IVotingVault {
-  /// @dev The pattern of a member DAO voting rep hat, i.e. hat 1.1.x.1
-  uint256 internal constant PATTERN = 0x00000001_0001_0000_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000;
+  /// @dev Scales up the hat balance to match voting power from ERC20-like values;
+  uint256 internal constant SCALING_FACTOR = 10**18;
+  /// @dev The pattern of a member DAO voting rep hat, i.e. hat 87.1.x.1
+  uint256 internal constant PATTERN = 0x00000057_0001_0000_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000;
   /// @dev The mask for a member DAO voting rep hat
   uint256 internal constant MASK = 0xFFFFFFFF_FFFF_0000_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF;
   /// @notice The Hats Protocol contract
@@ -29,7 +31,7 @@ contract HatsHighCouncilVotingVault is IVotingVault {
 
     if (isVotingRepHat(votingHat)) {
       // hat balances are either 0 or 1
-      return HATS.balanceOf(user, votingHat);
+      return HATS.balanceOf(user, votingHat) * SCALING_FACTOR;
     } else {
       return 0;
     }

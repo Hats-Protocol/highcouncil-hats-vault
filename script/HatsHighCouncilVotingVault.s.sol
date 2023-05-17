@@ -30,9 +30,16 @@ contract Deploy is Script {
     vm.stopBroadcast();
 
     if (verbose) {
-      console2.log("Counter:", address(hhcvv));
+      console2.log("Hats Voting Vault:", address(hhcvv));
     }
   }
 }
 
-// forge script script/Deploy.s.sol -f ethereum --broadcast --verify
+// forge script script/HatsHighCouncilVotingVault.s.sol -f goerli --broadcast --verify
+
+/*
+forge verify-contract --chain-id 5 --num-of-optimizations 1000000 --watch --constructor-args $(cast abi-encode \
+"constructor(address)" 0x9D2dfd6066d5935267291718E8AA16C8Ab729E9d) --compiler-version v0.8.18
+0x8542711a4c5e47c29a36858d671f8a8abe852751 \
+   src/HatsHighCouncilVotingVault.sol:HatsHighCouncilVotingVault --etherscan-api-key $ETHERSCAN_KEY
+ */
