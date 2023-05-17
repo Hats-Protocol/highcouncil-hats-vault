@@ -42,7 +42,7 @@ contract IsVotingRepHat is HHCVVTest {
   }
 
   function testFuzz_wrongTopHat_false(uint32 id) public {
-    vm.assume(id > 1);
+    vm.assume(id != 87);
     testValue = 0x00000000_0001_0001_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 + (uint256(id) << 224);
     console2.log(testValue);
     assertFalse(hhcvv.isVotingRepHat(testValue));
@@ -61,4 +61,12 @@ contract IsVotingRepHat is HHCVVTest {
     console2.log(testValue);
     assertFalse(hhcvv.isVotingRepHat(testValue));
   }
+
+  function test_concrete_false() public { }
 }
+
+// TODO:
+// wearsVotingRepHat
+// setVotingRepHat
+// claimVotingPower
+// queryVotePower
