@@ -1,0 +1,7 @@
+ERC1155/=lib/hats-protocol/lib/ERC1155/
+council/=lib/council/contracts/
+ds-test/=lib/forge-std/lib/ds-test/src/
+forge-std/=lib/forge-std/src/
+hats-protocol/=lib/hats-protocol/src/
+solbase/=lib/hats-protocol/lib/solbase/src/
+utils/=lib/hats-protocol/lib/utils/

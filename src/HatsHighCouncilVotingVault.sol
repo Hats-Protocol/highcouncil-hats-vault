@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.18;
 
-import { console2 } from "forge-std/Test.sol"; // remove before deploy
+// import { console2 } from "forge-std/Test.sol"; // remove before deploy
 import { IHats } from "hats-protocol/Interfaces/IHats.sol";
 import { IVotingVault } from "council/interfaces/IVotingVault.sol";
 
@@ -11,7 +11,13 @@ contract HatsHighCouncilVotingVault is IVotingVault {
   //////////////////////////////////////////////////////////////*/
 
   error AlreadyRep();
-  error NotVotingRepHatWearer();
+  error NotWearingVotingRepHat();
+
+  /*//////////////////////////////////////////////////////////////
+                          EVENTS
+  //////////////////////////////////////////////////////////////*/
+
+  event NewVotingRep(address newRep, address prevRep, uint256 votingRepHat);
 
   /*//////////////////////////////////////////////////////////////
                           PUBLIC CONSTANTS
@@ -37,7 +43,7 @@ contract HatsHighCouncilVotingVault is IVotingVault {
 
   struct VotingRep {
     address rep;
-    uint256 setAt; // block number
+    uint256 since; // block number
   }
 
   /*//////////////////////////////////////////////////////////////
@@ -59,7 +65,7 @@ contract HatsHighCouncilVotingVault is IVotingVault {
   //////////////////////////////////////////////////////////////*/
 
   /// @inheritdoc IVotingVault
-  function queryVotePower(address _user, uint256 _blockNumber, bytes calldata _extraData)// forgefmt: disable-line
+  function queryVotePower(address _user, uint256 _blockNumber, bytes calldata _extraData)
     external
     view
     override
@@ -82,21 +88,25 @@ contract HatsHighCouncilVotingVault is IVotingVault {
   //////////////////////////////////////////////////////////////*/
 
   /**
-   * @notice Sets `_user` as the rep for a given Member DAO voting rep hat
-   * @dev `_user` must be wearing `votingRepHat`, which must be a valid Member DAO voting rep hat
+   * @notice Sets `_user` as the rep for a given Member DAO `votingRepHat`, if it is valid and they are wearing it
+   * @dev Replaces the previous rep, if any
    * @param _user The address to set as the rep
    * @param _votingRepHat The id of the hat to set the rep for
    */
   function setVotingRep(address _user, uint256 _votingRepHat) public {
     // `_user` must be wearing `votingRepHat`, which must be a valid Member DAO voting rep hat
-    if (!wearsVotingRepHat(_user, _votingRepHat)) revert NotVotingRepHatWearer();
+    if (!wearsVotingRepHat(_user, _votingRepHat)) revert NotWearingVotingRepHat();
 
     VotingRep storage rep = votingReps[_votingRepHat];
+    address currentRep = rep.rep;
     // `_user` must not already be the rep
-    if (rep.rep == _user) revert AlreadyRep();
+    if (_user == currentRep) revert AlreadyRep();
     // set `_user` as the rep, and record the block number
     rep.rep = _user;
-    rep.setAt = block.number;
+    rep.since = block.number;
+
+    // log the rep change
+    emit NewVotingRep(_user, currentRep, _votingRepHat);
   }
 
   /**
@@ -140,6 +150,6 @@ contract HatsHighCouncilVotingVault is IVotingVault {
    */
   function isVotingRep(address _user, uint256 _hatId, uint256 _blockNumber) public view returns (bool) {
     VotingRep storage rep = votingReps[_hatId];
-    return wearsVotingRepHat(_user, _hatId) && (rep.rep == _user) && (rep.setAt < _blockNumber);
+    return wearsVotingRepHat(_user, _hatId) && (rep.rep == _user) && (rep.since < _blockNumber);
   }
 }
